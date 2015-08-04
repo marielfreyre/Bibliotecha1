@@ -16,13 +16,16 @@ public class Library {
         this.libraryBooks = libraryBooksForTest;
     }
 
-    public void hello() {
+    public void printsWelcome() {
         printStream.println("Welcome to the Library.");
     }
 
-    public void printAllLibraryBooks() {
+    public void listAllLibraryBooks() {
+        if(libraryBooks != null){
+
         for (String book : libraryBooks) {
             printStream.println(book);
+        }
         }
     }
 }

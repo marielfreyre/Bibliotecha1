@@ -17,35 +17,37 @@ public class LibraryTest {
 
     private List<String> libraryBooksForTest;
     private PrintStream printStream;
-    private Library classUnderTest;
+    private Library library;
 
     @Before
     public void setUp() throws Exception {
         libraryBooksForTest = new ArrayList<>();
-        libraryBooksForTest.add("Pat's Journal");
-        libraryBooksForTest.add("Mariel's Secrets");
         printStream = mock(PrintStream.class);
-        classUnderTest = new Library(printStream, libraryBooksForTest);
+
     }
 
-    @Test public void testPrintsWelcomeUponOpening() {
-
-        classUnderTest.hello();
+    @Test public void shouldPrintWelcome() {
+        library = new Library(printStream, libraryBooksForTest);
+        library.printsWelcome();
         verify(printStream).println("Welcome to the Library.");
-
     }
 
     @Test
-    public void testAllLibraryBooksGetListed() {
-
-        classUnderTest.printAllLibraryBooks();
+    public void shouldListAllLibraryBooksWhenBooksExist() {
+        library = new Library(printStream, libraryBooksForTest);
+        libraryBooksForTest.add("Pat's Journal");
+        libraryBooksForTest.add("Mariel's Secrets");
+        library.listAllLibraryBooks();
 
         verify(printStream).println("Pat's Journal");
         verify(printStream).println("Mariel's Secrets");
     }
 
     @Test
-    public void testPrintsMessageWhenNoBooksInLibrary()  {
+    public void shouldPrintNothingWhenNoLibraryBooksExist()  {
+        library = new Library(printStream, libraryBooksForTest);
+        library.listAllLibraryBooks();
+        verifyZeroInteractions(printStream);
 
     }
 }
