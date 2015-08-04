@@ -1,7 +1,9 @@
+import org.junit.Before;
 import org.junit.Test;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+
 
 import static org.mockito.Mockito.*;
 
@@ -12,12 +14,22 @@ import static org.mockito.Mockito.*;
  * @author mfreyre, @date 8/4/15 1:55 PM
  */
 public class LibraryTest {
-    @Test public void testPrintsWelcomeUponOpening() {
-        List<String> libraryBooksForTest = new ArrayList<>();
+
+    private List<String> libraryBooksForTest;
+    private PrintStream printStream;
+    private Library classUnderTest;
+
+    @Before
+    public void setUp() throws Exception {
+        libraryBooksForTest = new ArrayList<>();
         libraryBooksForTest.add("Pat's Journal");
         libraryBooksForTest.add("Mariel's Secrets");
-        PrintStream printStream = mock(PrintStream.class);
-        Library classUnderTest = new Library(printStream, libraryBooksForTest);
+        printStream = mock(PrintStream.class);
+        classUnderTest = new Library(printStream, libraryBooksForTest);
+    }
+
+    @Test public void testPrintsWelcomeUponOpening() {
+
         classUnderTest.hello();
         verify(printStream).println("Welcome to the Library.");
 
@@ -25,15 +37,15 @@ public class LibraryTest {
 
     @Test
     public void testAllLibraryBooksGetListed() {
-        List<String> libraryBooksForTest = new ArrayList<>();
-        libraryBooksForTest.add("Pat's Journal");
-        libraryBooksForTest.add("Mariel's Secrets");
-        PrintStream printStream = mock(PrintStream.class);
-        Library classUnderTest = new Library(printStream, libraryBooksForTest);
 
         classUnderTest.printAllLibraryBooks();
 
         verify(printStream).println("Pat's Journal");
         verify(printStream).println("Mariel's Secrets");
+    }
+
+    @Test
+    public void testPrintsMessageWhenNoBooksInLibrary()  {
+
     }
 }
